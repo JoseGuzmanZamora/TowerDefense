@@ -10,6 +10,7 @@ public class PathDeterminator : MonoBehaviour
     public GameObject start;
     public GameObject end;
     public List<Vector3> instructions = new List<Vector3>();
+    public bool instructionsReady = false;
     private Tilemap tilemap;
     private TileBase[] allTiles;
     private List<Vector3> streetTiles = new List<Vector3>();
@@ -52,6 +53,25 @@ public class PathDeterminator : MonoBehaviour
             limitCounter ++;
             if (limitCounter > 1000) break;
         }
+        instructionsReady = true;
+    }
+
+    public Vector3 AdjustFinalInstruction(Vector3 tilePosition, PathDirections lastDirection)
+    {
+        var threshold = 1;
+        switch (lastDirection)
+        {
+            case PathDirections.West:
+                return new Vector3(tilePosition.x - threshold, tilePosition.y, tilePosition.z);
+            case PathDirections.East:
+                return new Vector3(tilePosition.x + threshold, tilePosition.y, tilePosition.z);
+            case PathDirections.North:
+                return new Vector3(tilePosition.x, tilePosition.y + threshold, tilePosition.z);
+            case PathDirections.South:
+                return new Vector3(tilePosition.x, tilePosition.y - threshold, tilePosition.z);
+            default:
+                return tilePosition;
+        }
     }
 
     public bool ReachedEnd(Vector3 endPoint, Vector3 comparisonPoint)
@@ -85,7 +105,7 @@ public class PathDeterminator : MonoBehaviour
             .Where(e => e != PathDirections.Initial && e != origin).ToList();
         
         var maximumDistance = 0;
-        (int, Vector3Int, PathDirections) selectedPoint = (0, new Vector3Int(), PathDirections.Initial);
+        (int, Vector3, PathDirections) selectedPoint = (0, new Vector3Int(), PathDirections.Initial);
         foreach (var direction in possibleDirections)
         {
             var tempData = SingleDirectionCounterHelper(initialTilePlace, direction);
@@ -95,6 +115,8 @@ public class PathDeterminator : MonoBehaviour
                 selectedPoint = new (tempData.Item1, tempData.Item2, GetDirectionOpposite(direction));
             }
         }
+        var adjusted = AdjustFinalInstruction(selectedPoint.Item2, selectedPoint.Item3);
+        selectedPoint.Item2 = adjusted;
         return selectedPoint;
     }
 
