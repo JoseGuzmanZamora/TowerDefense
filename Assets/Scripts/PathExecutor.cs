@@ -7,7 +7,7 @@ public class PathExecutor : MonoBehaviour
     public int instructionCounter = 0;
     private int instructionsAmount = 0;
     private Rigidbody2D rb;
-    public int differenceThreshold = 1;
+    public float differenceThreshold = 0.1f;
     public Vector2 deltaMovement = Vector2.zero;
 
     private void Start() {
