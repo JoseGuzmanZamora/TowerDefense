@@ -11,6 +11,7 @@ public class PathDeterminator : MonoBehaviour
     public GameObject end;
     public List<Vector3> instructions = new List<Vector3>();
     public bool instructionsReady = false;
+    public int adjustThreshold = 1;
     private Tilemap tilemap;
     private TileBase[] allTiles;
     private List<Vector3> streetTiles = new List<Vector3>();
@@ -58,17 +59,16 @@ public class PathDeterminator : MonoBehaviour
 
     public Vector3 AdjustFinalInstruction(Vector3 tilePosition, PathDirections lastDirection)
     {
-        var threshold = 1;
         switch (lastDirection)
         {
             case PathDirections.West:
-                return new Vector3(tilePosition.x - threshold, tilePosition.y, tilePosition.z);
+                return new Vector3(tilePosition.x - adjustThreshold, tilePosition.y, tilePosition.z);
             case PathDirections.East:
-                return new Vector3(tilePosition.x + threshold, tilePosition.y, tilePosition.z);
+                return new Vector3(tilePosition.x + (adjustThreshold * 2), tilePosition.y, tilePosition.z);
             case PathDirections.North:
-                return new Vector3(tilePosition.x, tilePosition.y + threshold, tilePosition.z);
+                return new Vector3(tilePosition.x, tilePosition.y + (adjustThreshold * 2), tilePosition.z);
             case PathDirections.South:
-                return new Vector3(tilePosition.x, tilePosition.y - threshold, tilePosition.z);
+                return new Vector3(tilePosition.x, tilePosition.y - adjustThreshold, tilePosition.z);
             default:
                 return tilePosition;
         }
@@ -76,7 +76,7 @@ public class PathDeterminator : MonoBehaviour
 
     public bool ReachedEnd(Vector3 endPoint, Vector3 comparisonPoint)
     {
-        return Mathf.Abs(endPoint.x - comparisonPoint.x) <= 3 && Math.Abs(endPoint.y - comparisonPoint.y) <= 3;
+        return Mathf.Abs(endPoint.x - comparisonPoint.x) <= adjustThreshold && Math.Abs(endPoint.y - comparisonPoint.y) <= adjustThreshold;
     }
 
     public Vector3 FindClosestTile(Transform referencePoint)
