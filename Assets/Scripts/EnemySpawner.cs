@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public List<PathExecutor> enemiesPrefabs;
     public PathDeterminator pathInstructions;
+    public CityEconomyManager economyManager;
     public float spawnerInterval = 1f;
     public int enemyLimit = 10;
     public List<GameObject> availableEnemies;
@@ -28,6 +29,10 @@ public class EnemySpawner : MonoBehaviour
             availableEnemies.Add(newEnemy.gameObject);
             newEnemy.pathInstructionsSetup = pathInstructions;
             spawnerCounter = 0;
+
+            // Get the enemies life controllers
+            var lifeController = newEnemy.gameObject.GetComponent<EnemyLifeController>();
+            lifeController.economyManager = economyManager;
        }
     }
 }
