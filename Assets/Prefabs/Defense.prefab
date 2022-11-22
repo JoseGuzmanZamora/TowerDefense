@@ -178,6 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5491279751133940982}
   - component: {fileID: 5491279751133940981}
+  - component: {fileID: 878739881647950400}
   m_Layer: 0
   m_Name: Defense
   m_TagString: Untagged
@@ -222,6 +223,22 @@ MonoBehaviour:
   referenceSpriteSize: {x: 0, y: 0, z: 0}
   baseSize: {x: 2, y: 2}
   isPositioned: 0
+--- !u!114 &878739881647950400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491279751133940983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a919da78c247c4f12b731c280f531f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemiesInScene: []
+  bulletPrefab: {fileID: 4886872365520315584, guid: 60e4d70657deb4b78ae3dfe964f547ef, type: 3}
+  isShooting: 1
+  shootingInterval: 1.5
 --- !u!1 &5491279751208682614
 GameObject:
   m_ObjectHideFlags: 0

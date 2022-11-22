@@ -10,6 +10,7 @@ public class DefenseController : MonoBehaviour
     public PositionDefense defensePrefab;
     public List<PositionDefense> spawnedPrefabs;
     public Tilemap cityTilemap;
+    public EnemySpawner enemySpawner;
 
     void Update()
     {
@@ -20,6 +21,24 @@ public class DefenseController : MonoBehaviour
             spawnedDefense.transform.parent = transform;
             spawnedPrefabs.Add(spawnedDefense);
         }
+        
+        // set the objective to all children
+        var childrenCount = transform.childCount;
+        for (int i = 0; i < childrenCount; i++)
+        {
+            var child = transform.GetChild(i);
+            var childAttackController = child.gameObject.GetComponent<AttackController>();
+            childAttackController.objective = GetEnemy();
+        }
+    }
+
+    public GameObject GetEnemy()
+    {
+        if (enemySpawner.availableEnemies.Count > 0)
+        {
+            return enemySpawner.availableEnemies[0];
+        }
+        return null;
     }
 
     public bool AllSpawnedArePositioned()
