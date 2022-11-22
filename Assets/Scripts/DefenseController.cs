@@ -11,15 +11,18 @@ public class DefenseController : MonoBehaviour
     public List<PositionDefense> spawnedPrefabs;
     public Tilemap cityTilemap;
     public EnemySpawner enemySpawner;
+    public CityInventoryManager inventory;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && AllSpawnedArePositioned())
+        var canPosition = HasInventoryToInstantiate();
+        if (Input.GetKeyDown(KeyCode.Space) && AllSpawnedArePositioned() && canPosition is not null)
         {
             var spawnedDefense = Instantiate(defensePrefab, new Vector3(0,0,0), Quaternion.identity);
             spawnedDefense.cityTileMap = cityTilemap;
             spawnedDefense.transform.parent = transform;
             spawnedPrefabs.Add(spawnedDefense);
+            inventory.defenseInventoryStatus[canPosition] = true;
         }
         
         // set the objective to all children
@@ -44,5 +47,12 @@ public class DefenseController : MonoBehaviour
     public bool AllSpawnedArePositioned()
     {
         return spawnedPrefabs.Any(p => !p.isPositioned) is false;
+    }
+
+    // Check the dictionary for defenses that have not been positioned yet
+    public string HasInventoryToInstantiate()
+    {
+        var next = inventory.defenseInventoryStatus.Where(s => s.Value is false).FirstOrDefault();
+        return next.Key;
     }
 }
