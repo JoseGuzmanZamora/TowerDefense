@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfffb74d9d1c54511a77a8144737802e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 3
+  movementSpeed: 4
   pathInstructionsSetup: {fileID: 0}
   instructionCounter: 0
   differenceThreshold: 0.1
@@ -188,3 +188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ccac4c611e04a9e8783c6fee056458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  life: 100
+  enemyValue: 200
+  economyManager: {fileID: 0}

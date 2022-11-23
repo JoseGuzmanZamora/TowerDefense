@@ -19,6 +19,6 @@ public class CityEconomyManager : MonoBehaviour
     }
 
     private void Update() {
-        if (moneyText is not null) moneyText.text = $"Money: ${moneyAmount}";
+        if (moneyText is not null) moneyText.text = $"Budget: ${moneyAmount}.00";
     }
 }
