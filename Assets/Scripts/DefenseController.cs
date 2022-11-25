@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class DefenseController : MonoBehaviour
 {
@@ -12,17 +14,19 @@ public class DefenseController : MonoBehaviour
     public Tilemap cityTilemap;
     public EnemySpawner enemySpawner;
     public CityInventoryManager inventory;
+    public bool isPositioning = false;
+    public Image buttonSelectionImage;
 
     void Update()
     {
         var canPosition = HasInventoryToInstantiate();
-        if (Input.GetKeyDown(KeyCode.Space) && AllSpawnedArePositioned() && canPosition is not null)
+        if (Input.GetKeyDown(KeyCode.Space) && AllSpawnedArePositioned() && canPosition)
         {
             var spawnedDefense = Instantiate(defensePrefab, new Vector3(0,0,0), Quaternion.identity);
+            inventory.spawnedInventory[Guid.NewGuid().ToString()] = spawnedDefense;
             spawnedDefense.cityTileMap = cityTilemap;
             spawnedDefense.transform.parent = transform;
             spawnedPrefabs.Add(spawnedDefense);
-            inventory.defenseInventoryStatus[canPosition] = true;
         }
         
         // set the objective to all children
@@ -50,9 +54,33 @@ public class DefenseController : MonoBehaviour
     }
 
     // Check the dictionary for defenses that have not been positioned yet
-    public string HasInventoryToInstantiate()
+    public bool HasInventoryToInstantiate()
     {
-        var next = inventory.defenseInventoryStatus.Where(s => s.Value is false).FirstOrDefault();
-        return next.Key;
+        return inventory.totalInventory > inventory.spawnedInventory.Count;
+    }
+
+    public void SelectedDefenseToPosition()
+    {
+        isPositioning = !isPositioning;
+
+        var canPosition = HasInventoryToInstantiate();
+        if (isPositioning && AllSpawnedArePositioned() && canPosition)
+        {
+            var spawnedDefense = Instantiate(defensePrefab, new Vector3(0,0,0), Quaternion.identity);
+            inventory.spawnedInventory[Guid.NewGuid().ToString()] = spawnedDefense;
+            spawnedDefense.cityTileMap = cityTilemap;
+            spawnedDefense.transform.parent = transform;
+            spawnedPrefabs.Add(spawnedDefense);
+        }
+
+        var tempColor = buttonSelectionImage.color;
+        if (isPositioning)
+        {
+            buttonSelectionImage.color = new Color(tempColor.r, tempColor.g, tempColor.b, 255);
+        }
+        else
+        {
+            buttonSelectionImage.color = new Color(tempColor.r, tempColor.g, tempColor.b, 0);
+        }
     }
 }

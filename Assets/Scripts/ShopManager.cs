@@ -22,7 +22,7 @@ public class ShopManager : MonoBehaviour
             if (economy.moneyAmount >= price)
             {
                 // is able to buy
-                inventory.defenseInventoryStatus[Guid.NewGuid().ToString()] = false;
+                inventory.totalInventory++;
                 economy.moneyAmount -= price;
             }
         }

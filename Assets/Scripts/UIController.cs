@@ -48,7 +48,7 @@ public class UIController : MonoBehaviour
         if (transform.tag == "Shop")
         {
             // only move down
-            canvasTransform.position = new Vector3(originalTransform.x, originalTransform.y - 700, originalTransform.z);
+            canvasTransform.position = new Vector3(originalTransform.x, originalTransform.y - 7000, originalTransform.z);
             shown = false;
         }
         else
