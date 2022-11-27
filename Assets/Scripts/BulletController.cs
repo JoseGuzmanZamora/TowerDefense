@@ -24,6 +24,7 @@ public class BulletController : MonoBehaviour
         {
             var enemyLife = other.gameObject.GetComponent<EnemyLifeController>();
             enemyLife.life -= damageAmount;
+            enemyLife.GotHit();
             Destroy(gameObject);
         }
     }

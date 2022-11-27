@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PathExecutor : MonoBehaviour
 {
-    public int movementSpeed = 3;
+    public float movementSpeed = 3f;
     public PathDeterminator pathInstructionsSetup;
     public int instructionCounter = 0;
     private int instructionsAmount = 0;
