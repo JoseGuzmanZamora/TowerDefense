@@ -76,7 +76,7 @@ public class PositionDefense : MonoBehaviour
             redRenderer.enabled = !isValidPosition;
         }
 
-        if (Input.GetMouseButton(0) && isValidPosition)
+        if (Input.GetMouseButtonDown(0) && isValidPosition)
         {
             isPositioning = false;
             isPositioned = true;

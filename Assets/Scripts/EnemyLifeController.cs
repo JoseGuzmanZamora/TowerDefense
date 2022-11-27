@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyLifeController : MonoBehaviour
 {
     public int life = 100;
+    public int enemyValue = 200;
+    public CityEconomyManager economyManager;
     void Start()
     {
         
@@ -17,6 +19,7 @@ public class EnemyLifeController : MonoBehaviour
             var enemySpawner = parent.gameObject.GetComponent<EnemySpawner>();
             enemySpawner.availableEnemies.Remove(gameObject);
             Destroy(gameObject);
+            economyManager.IncreaseMoneyAmount(enemyValue);
         }
     }
 }
